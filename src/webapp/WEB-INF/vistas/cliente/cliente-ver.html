@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Core CSS - Include with every page -->
+<link type="text/css" rel="stylesheet"
+	data-th-href="@{/static/css/bootstrap-3.1.1.min.css}" />
+
+<link type="text/css" rel="stylesheet"
+	data-th-href="@{/static/font-awesome/css/font-awesome.css}" />
+
+<!-- SB Admin CSS - Include with every page -->
+<link type="text/css" rel="stylesheet"
+	data-th-href="@{/static/css/sb-admin.css}" />
+
+<style>
+.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
+	.no-border-on-me>tfoot>tr>th, .no-border-on-me>thead>tr>td,
+	.no-border-on-me>tbody>tr>td, .no-border-on-me>tfoot>tr>td {
+	border-top-style: none;
+	border-bottom-style: none;
+}
+</style>
+
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<!-- /#wrapper -->
+
+		<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+
+		<div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+
+
+		<div id="page-wrapper">
+			<div class="col-md-6 col-md-offset-2">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Ver Cliente</div>
+					<div class="panel-body">
+
+
+						<!-- Text input-->
+						<div class="form-group">
+							<label>Nombres: </label>
+							<article th:utext="${cliente.nombres}"></article>
+						</div>
+
+						<div class="form-group">
+							<label>Apellidos: </label>
+							<article th:utext="${cliente.apellidos}"></article>
+						</div>
+
+						<div class="form-group">
+							<label>Dirección: </label>
+							<article th:utext="${cliente.direccion}"></article>
+						</div>
+
+						<div class="form-group">
+							<label>DNI: </label>
+							<article th:utext="${cliente.dni}"></article>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+							<div class="col-md-8">
+								<a th:href="@{'/cliente/index'}" class="btn btn-danger">Volver</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
