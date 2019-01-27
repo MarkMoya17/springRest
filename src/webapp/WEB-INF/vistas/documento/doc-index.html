@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="mcliente" xmlns="http://www.w3.org/1999/xhtml"
+<html ng-app="mdocumento" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -17,9 +17,9 @@
 <!-- SB Admin CSS - Include with every page -->
 <link type="text/css" rel="stylesheet"
 	data-th-href="@{/static/css/sb-admin.css}" />
-
 	
 <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
 
 <style>
 .no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
@@ -31,7 +31,7 @@
 </style>
 </head>
 
-<body ng-controller="clienteCtrl">
+<body ng-controller="documentoCtrl">
 
 	<div id="wrapper">
 		<!-- /#wrapper -->
@@ -83,7 +83,7 @@
 							</div>
 
 							<div class="panel panel-primary class">
-								<div class="panel-heading">Clientes:</div>
+								<div class="panel-heading">Documentos:</div>
 								<div class="panel-body">
 									<form id="form1" class="form-horizontal">
 										<table class="table table-responsive">
@@ -93,47 +93,17 @@
 														<label class="col-md-4 control-label" for="label">Id:</label>
 														<div class="col-md-4">
 															<input id="label" name="t5" type="text"
-																placeholder="Codigo" ng-model="clienteActual.id"
+																placeholder="Codigo" ng-model="documentoActual.id"
 																ng-readonly="sololectura" class="form-control input-md"
 																required="">
 														</div>
 													</div>
 													<div class="form-group">
-														<label class="col-md-4 control-label" for="label2">Apellidos:</label>
+														<label class="col-md-4 control-label" for="label2">Nombre:</label>
 														<div class="col-md-8">
 															<input id="label2" name="t5" type="text"
 																placeholder="Nombre"
-																ng-model="clienteActual.apellidos"
-																ng-readonly="sololectura" class="form-control input-md"
-																required="">
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-md-4 control-label" for="label2">Nombres:</label>
-														<div class="col-md-8">
-															<input id="label2" name="t5" type="text"
-																placeholder="Nombre"
-																ng-model="clienteActual.nombres"
-																ng-readonly="sololectura" class="form-control input-md"
-																required="">
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-md-4 control-label" for="label2">Dirección:</label>
-														<div class="col-md-8">
-															<input id="label2" name="t5" type="text"
-																placeholder="Nombre"
-																ng-model="clienteActual.direccion"
-																ng-readonly="sololectura" class="form-control input-md"
-																required="">
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-md-4 control-label" for="label2">DNI:</label>
-														<div class="col-md-8">
-															<input id="label2" name="t5" type="text"
-																placeholder="Nombre"
-																ng-model="clienteActual.dni"
+																ng-model="documentoActual.nombre"
 																ng-readonly="sololectura" class="form-control input-md"
 																required="">
 														</div>
@@ -151,14 +121,12 @@
 
 
 
-
-
 						</div>
 
 						<div ng-switch-when="listado">
 
 							<div class='panel panel-default'>
-								<div class="panel-heading">CLIENTES:</div>
+								<div class="panel-heading">DOCUMENTOS:</div>
 								<div class='panel-body'>
 									Buscar <input type="text" ng-model="filtro"> <br>
 									<br>
@@ -167,22 +135,14 @@
 										<tr>
 
 											<td>Id</td>
-											<td>Apellidos</td>
-											<td>Nombres</td>
-											<td>Dirección</td>
-											<td>DNI</td>
-											<td>Accion</td>
+											<td>Nombre</td>
 										</tr>
 
-										<tr ng-repeat='c in clientes| filter:filtro'>
+										<tr ng-repeat='d in documentos| filter:filtro'>
 
-											<td>{{c.id}}</td>
-											<td>{{c.apellidos}}</td>
-											<td>{{c.nombres}}</td>
-											<td>{{c.direccion}}</td>
-											<td>{{c.dni}}</td>
-
-											<td><a href="" ng-click="seleccionar(c.id)">Seleccionar:</a>
+											<td>{{d.id}}</td>
+											<td>{{d.nombre}}</td>
+											<td><a href="" ng-click="seleccionar(d.id)">Seleccionar:</a>
 											</td>
 
 										</tr>
@@ -226,7 +186,7 @@
 
 	<!--LUEGO EL  CONTROLADOR -->
 	<script type="text/javascript"
-		data-th-src="@{/static/js/controller/controllercli.js}"></script>
+		data-th-src="@{/static/js/controller/controllerdoc.js}"></script>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 

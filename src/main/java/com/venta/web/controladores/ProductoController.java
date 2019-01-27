@@ -32,9 +32,9 @@ public class ProductoController {
 
 	@RequestMapping("/new")
 	public String fnuevoproducto(Model modelo) {
-		//Enviamos un objeto producto en blanco para ser llenado y persistido 
+		// Enviamos un objeto producto en blanco para ser llenado y persistido
 		modelo.addAttribute(new Producto());
-		//Enviamos las categorias para mostrarlas en la lista desplegable
+		// Enviamos las categorias para mostrarlas en la lista desplegable
 		modelo.addAttribute("categorias", servicio.findAllCat());
 		return "producto/prod-new";
 	}
@@ -61,14 +61,23 @@ public class ProductoController {
 			Producto p = new Producto();
 			p = servicio.findOneProd(id);
 			System.out.println(p.getNombre());
-			
+
 			servicio.deleteProd(p);
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
+
 		modelo.addAttribute("productos", servicio.findAllProd());
 		return "producto/prod-index";
 
 	}
+
+	@RequestMapping("/fProdNombre")
+	public String filtroProductoNombre(@RequestParam("nombre") String nombre, Model modelo) {
+
+		modelo.addAttribute("productos", servicio.findByNombre(nombre));
+
+		return "producto/prod-index";
+	}
+
 }

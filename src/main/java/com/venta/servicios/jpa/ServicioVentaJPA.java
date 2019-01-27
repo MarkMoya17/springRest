@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.venta.proy.Categoria;
 import com.venta.proy.Cliente;
+import com.venta.proy.Documento;
 import com.venta.proy.Producto;
 import com.venta.repositorios.CategoriaRepository;
 import com.venta.repositorios.ClienteRepository;
+import com.venta.repositorios.DocumentoRepository;
 import com.venta.repositorios.ProductoRepository;
 import com.venta.servicios.ServicioVenta;
 
@@ -20,6 +22,8 @@ public class ServicioVentaJPA implements ServicioVenta {
 	private CategoriaRepository repocategoria;
 	@Autowired
 	private ClienteRepository repocliente;
+	@Autowired
+	private DocumentoRepository repodocumento;
 
 	
 	public ProductoRepository getRepoproducto() {
@@ -119,6 +123,40 @@ public class ServicioVentaJPA implements ServicioVenta {
 		repocliente.save(cliente);
 		
 	}
+
+	public Documento findOneDoc(Integer id) {
+		// TODO Auto-generated method stub
+		return repodocumento.findOne(id);
+	}
+
+	public Iterable<Documento> findAllDoc() {
+		// TODO Auto-generated method stub
+		return repodocumento.findAll();
+	}
+
+	@Transactional
+	public void saveDoc(Documento documento) {
+		// TODO Auto-generated method stub
+		repodocumento.save(documento);
+	}
+
+	@Transactional
+	public void updateDoc(Documento documento) {
+		// TODO Auto-generated method stub
+		repodocumento.save(documento);
+	}
+
+	@Transactional
+	public void deleteDoc(Documento documento) {
+		// TODO Auto-generated method stub
+		repodocumento.delete(documento);
+	}
+
+	//@Override
+	public Iterable<Producto> findByNombre(String nombre) {
+		return repoproducto.findByNombre(nombre);
+	}
+
 
 
 }

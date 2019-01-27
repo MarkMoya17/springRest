@@ -1,5 +1,7 @@
 package com.venta.proy;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,9 @@ import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="cliente")
-public class Cliente {
+public class Cliente implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

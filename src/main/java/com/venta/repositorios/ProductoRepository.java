@@ -8,4 +8,6 @@ import com.venta.proy.Producto;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer>{
 
+	public Iterable<Producto> findByNombre(String nombre);
+	
 }

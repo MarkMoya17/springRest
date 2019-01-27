@@ -1,11 +1,11 @@
-var app = angular.module("mcategoria", []);
-app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
+var app = angular.module("mcliente", []);
+app.controller("clienteCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	// Variable inicial para el indice del array
 	var idx = 0;
 	$scope.objmax = {};
-	$scope.categorias = [];
-	$scope.categoriaActual = {};
+	$scope.clientes = [];
+	$scope.clienteActual = {};
 
 	$scope.vista = "formulario";
 	$scope.navegacion = true;
@@ -15,34 +15,37 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	$http({
 		method : 'GET',
-		url : '/apicategoria/all'
+		url : '/apicliente/all'
 	}).success(function(data) {
-		$scope.categorias = data;
+		$scope.clientes = data;
 	});
 
 	$scope.listar = function() {
 		$http({
 			method : 'GET',
-			url : '/apicategoria/all'
+			url : '/apicliente/all'
 		}).success(function(data) {
-			$scope.categorias = data;
+			$scope.clientes = data;
 		});
 	};
 
 	$scope.nuevo = function() {
 
 		var idx = -1;
-		var categoriaArray = eval($scope.categorias);
-		var may = categoriaArray[0].id
+		var clienteArray = eval($scope.clientes);
+		var may = clienteArray[0].id
 
-		for (var i = 0; i < categoriaArray.length; i++) {
-			if (categoriaArray[i].id > may) {
-				may = categoriaArray[i].id;
+		for (var i = 0; i < clienteArray.length; i++) {
+			if (clienteArray[i].id > may) {
+				may = clienteArray[i].id;
 			}
 		}
 
-		$scope.categoriaActual.id = may + 1;
-		$scope.categoriaActual.denominacion = " ";
+		$scope.clienteActual.id = may + 1;
+		$scope.clienteActual.apellidos = " ";
+		$scope.clienteActual.nombres = " ";
+		$scope.clienteActual.direccion = " ";
+		$scope.clienteActual.dni = " ";
 
 		$scope.botones = "editable";
 		$scope.sololectura = false;
@@ -71,15 +74,15 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	$scope.seleccionar = function(id) {
 		var idx = -1;
-		var categoriaArray = eval($scope.categorias);
-		for (var i = 0; i < categoriaArray.length; i++) {
-			/*busca la categoria en el json donde el id es igual al id que se le pasa*/
-			if (categoriaArray[i].id === id) {
+		var clienteArray = eval($scope.clientes);
+		for (var i = 0; i < clienteArray.length; i++) {
+			if (clienteArray[i].id === id) {
 				idx = i;
-				$scope.categoriaActual = $scope.categorias[idx];
+				$scope.clienteActual = $scope.clientes[idx];
 				break;
 			}
 		}
+		toastr.success('Exito.', 'Registro Seleccionado', {timeOut: 50});
 		$scope.vista = "formulario";
 	};
 
@@ -88,14 +91,18 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 		if ($scope.edit === false) {
 			$http({
 				method : 'POST',
-				url : '/apicategoria/save',
+				url : '/apicliente/save',
 				data : {
-					'id' : $scope.categoriaActual.id,
-					'denominacion' : $scope.categoriaActual.denominacion
+					'id' : $scope.clienteActual.id,
+					'apellidos' : $scope.clienteActual.apellidos,
+					'nombres' : $scope.clienteActual.nombres,
+					'direccion' : $scope.clienteActual.direccion,
+					'dni' : $scope.clienteActual.dni
 				}
 			}).success(function(data, status, headers, config) {
-				// toastr.success('Exito.', 'Registro Guardado', {timeOut: 50});
+				toastr.success('Exito.', 'Registro Guardado', {timeOut: 50});
 				$scope.listar();
+				$scope.vista = "listado";
 			}).error(function(data, status, headers, config) {
 				$scope.status = status;
 			});
@@ -104,15 +111,18 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 			$http({
 
 				method : 'PUT',
-				url : '/apicategoria/update/' + $scope.categoriaActual.id,
+				url : '/apicliente/update/' + $scope.clienteActual.id,
 				data : {
-					'id' : $scope.categoriaActual.id,
-					'denominacion' : $scope.categoriaActual.denominacion,
+					'id' : $scope.clienteActual.id,
+					'apellidos' : $scope.clienteActual.apellidos,
+					'nombres' : $scope.clienteActual.nombres,
+					'direccion' : $scope.clienteActual.direccion,
+					'dni' : $scope.clienteActual.dni
 				}
 			}).success(function(data, status, headers, config) {
-				// toastr.success('Exito.', 'Registro Actualizado', {timeOut:
-				// 50});
+				toastr.success('Exito.', 'Registro Actualizado', {timeOut:50});
 				$scope.listar();
+				$scope.vista = "listado";
 			}).error(function(data, status, headers, config) {
 				$scope.status = status;
 			});
@@ -130,14 +140,14 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 		if (x) {
 			$http({
 				method : 'DELETE',
-				url : '/apicategoria/delete/' + $scope.categoriaActual.id,
+				url : '/apicliente/delete/' + $scope.clienteActual.id,
 				data : {
-					'id' : $scope.categoriaActual.id,
+					'id' : $scope.clienteActual.id,
 				}
 			}).success(function(data, status, headers, config) {
-				// toastr.success('Exito.', 'Registro Eliminado', {timeOut:
-				// 50});
+				toastr.success('Exito.', 'Registro Eliminado', {timeOut:50});
 				$scope.listar();
+				$scope.vista = "listado";
 			}).error(function(data, status, headers, config) {
 				$scope.status = status;
 			});
@@ -151,12 +161,12 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	$scope.primero = function() {
 		idx = 0;
-		$scope.categoriaActual = $scope.categorias[idx];
+		$scope.clienteActual = $scope.clientes[idx];
 	};
 
 	$scope.ultimo = function() {
 		// El ultimo elemento se determina por la longitud del array (lenght)
-		idx = $scope.categorias.length - 1;
-		$scope.categoriaActual = $scope.categorias[idx];
+		idx = $scope.clientes.length - 1;
+		$scope.clienteActual = $scope.clientes[idx];
 	};
 } ]);

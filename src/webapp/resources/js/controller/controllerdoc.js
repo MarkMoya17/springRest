@@ -1,11 +1,11 @@
-var app = angular.module("mcategoria", []);
-app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
+var app = angular.module("mdocumento", []);
+app.controller("documentoCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	// Variable inicial para el indice del array
 	var idx = 0;
 	$scope.objmax = {};
-	$scope.categorias = [];
-	$scope.categoriaActual = {};
+	$scope.documentos = [];
+	$scope.documentoActual = {};
 
 	$scope.vista = "formulario";
 	$scope.navegacion = true;
@@ -15,34 +15,34 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	$http({
 		method : 'GET',
-		url : '/apicategoria/all'
+		url : '/apidocumento/all'
 	}).success(function(data) {
-		$scope.categorias = data;
+		$scope.documentos = data;
 	});
 
 	$scope.listar = function() {
 		$http({
 			method : 'GET',
-			url : '/apicategoria/all'
+			url : '/apidocumento/all'
 		}).success(function(data) {
-			$scope.categorias = data;
+			$scope.documentos = data;
 		});
 	};
 
 	$scope.nuevo = function() {
 
 		var idx = -1;
-		var categoriaArray = eval($scope.categorias);
-		var may = categoriaArray[0].id
+		var documentoArray = eval($scope.documentos);
+		var may = documentoArray[0].id
 
-		for (var i = 0; i < categoriaArray.length; i++) {
-			if (categoriaArray[i].id > may) {
-				may = categoriaArray[i].id;
+		for (var i = 0; i < documentoArray.length; i++) {
+			if (documentoArray[i].id > may) {
+				may = documentoArray[i].id;
 			}
 		}
 
-		$scope.categoriaActual.id = may + 1;
-		$scope.categoriaActual.denominacion = " ";
+		$scope.documentoActual.id = may + 1;
+		$scope.documentoActual.nombre = " ";
 
 		$scope.botones = "editable";
 		$scope.sololectura = false;
@@ -71,15 +71,15 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	$scope.seleccionar = function(id) {
 		var idx = -1;
-		var categoriaArray = eval($scope.categorias);
-		for (var i = 0; i < categoriaArray.length; i++) {
-			/*busca la categoria en el json donde el id es igual al id que se le pasa*/
-			if (categoriaArray[i].id === id) {
+		var documentoArray = eval($scope.documentos);
+		for (var i = 0; i < documentoArray.length; i++) {
+			if (documentoArray[i].id === id) {
 				idx = i;
-				$scope.categoriaActual = $scope.categorias[idx];
+				$scope.documentoActual = $scope.documentos[idx];
 				break;
 			}
 		}
+		toastr.success('Exito.', 'Registro Seleccionado', {timeOut:50});
 		$scope.vista = "formulario";
 	};
 
@@ -88,14 +88,15 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 		if ($scope.edit === false) {
 			$http({
 				method : 'POST',
-				url : '/apicategoria/save',
+				url : '/apidocumento/save',
 				data : {
-					'id' : $scope.categoriaActual.id,
-					'denominacion' : $scope.categoriaActual.denominacion
+					'id' : $scope.documentoActual.id,
+					'nombre' : $scope.documentoActual.nombre
 				}
 			}).success(function(data, status, headers, config) {
-				// toastr.success('Exito.', 'Registro Guardado', {timeOut: 50});
+				toastr.success('Exito.', 'Registro Guardado', {timeOut: 50});
 				$scope.listar();
+				$scope.vista = "listado";
 			}).error(function(data, status, headers, config) {
 				$scope.status = status;
 			});
@@ -104,19 +105,19 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 			$http({
 
 				method : 'PUT',
-				url : '/apicategoria/update/' + $scope.categoriaActual.id,
+				url : '/apidocumento/update/' + $scope.documentoActual.id,
 				data : {
-					'id' : $scope.categoriaActual.id,
-					'denominacion' : $scope.categoriaActual.denominacion,
+					'id' : $scope.documentoActual.id,
+					'nombre' : $scope.documentoActual.nombre
 				}
 			}).success(function(data, status, headers, config) {
-				// toastr.success('Exito.', 'Registro Actualizado', {timeOut:
-				// 50});
+				toastr.success('Exito.', 'Registro Actualizado', {timeOut:50});
 				$scope.listar();
+				$scope.vista = "listado";
 			}).error(function(data, status, headers, config) {
 				$scope.status = status;
 			});
-
+						
 		}
 
 		$scope.primero();
@@ -130,14 +131,14 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 		if (x) {
 			$http({
 				method : 'DELETE',
-				url : '/apicategoria/delete/' + $scope.categoriaActual.id,
+				url : '/apidocumento/delete/' + $scope.documentoActual.id,
 				data : {
-					'id' : $scope.categoriaActual.id,
+					'id' : $scope.documentoActual.id,
 				}
 			}).success(function(data, status, headers, config) {
-				// toastr.success('Exito.', 'Registro Eliminado', {timeOut:
-				// 50});
+				toastr.success('Exito.', 'Registro Eliminado', {timeOut:50});
 				$scope.listar();
+				$scope.vista = "listado";
 			}).error(function(data, status, headers, config) {
 				$scope.status = status;
 			});
@@ -151,12 +152,12 @@ app.controller("categoriaCtrl", [ '$scope', '$http', function($scope, $http) {
 
 	$scope.primero = function() {
 		idx = 0;
-		$scope.categoriaActual = $scope.categorias[idx];
+		$scope.documentoActual = $scope.documento[idx];
 	};
 
 	$scope.ultimo = function() {
 		// El ultimo elemento se determina por la longitud del array (lenght)
-		idx = $scope.categorias.length - 1;
-		$scope.categoriaActual = $scope.categorias[idx];
+		idx = $scope.documento.length - 1;
+		$scope.documentoActual = $scope.documento[idx];
 	};
 } ]);

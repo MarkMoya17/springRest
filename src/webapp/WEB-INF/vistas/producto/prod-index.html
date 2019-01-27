@@ -19,7 +19,7 @@
 	data-th-href="@{/static/css/sb-admin.css}" />
 
 <style>
-	.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
+.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
 	.no-border-on-me>tfoot>tr>th, .no-border-on-me>thead>tr>td,
 	.no-border-on-me>tbody>tr>td, .no-border-on-me>tfoot>tr>td {
 	border-top-style: none;
@@ -46,6 +46,11 @@
 					<form action="new">
 						<button class="btn btn-primary" type="submit">Nuevo
 							Producto</button>
+					</form>
+
+					<form action="fProdNombre">
+						<input type="text" name="nombre" />
+						<input type="submit" value="filtroNombre" />
 					</form>
 
 					<br>
@@ -86,8 +91,7 @@
 																	data-original-title="Borrar"
 																	class="btn btn-default btn-hover-info btn-xs glyphicon glyphicon-trash"
 																	data-toggle="tooltip" data-placement="top"
-																	title="Eliminar Producto">
-																</a>
+																	title="Eliminar Producto"> </a>
 															</div>
 
 														</td>

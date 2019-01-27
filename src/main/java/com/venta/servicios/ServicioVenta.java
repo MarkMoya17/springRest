@@ -2,6 +2,7 @@ package com.venta.servicios;
 
 import com.venta.proy.Categoria;
 import com.venta.proy.Cliente;
+import com.venta.proy.Documento;
 import com.venta.proy.Producto;
 import com.venta.repositorios.CategoriaRepository;
 import com.venta.repositorios.ClienteRepository;
@@ -50,5 +51,17 @@ public interface ServicioVenta {
 	void updateCli(Cliente cliente);
 
 	void deleteCli(Cliente cliente);
+	
+	Documento findOneDoc(Integer id);
+
+	Iterable<Documento> findAllDoc();
+
+	void saveDoc(Documento documento);
+	
+	void updateDoc(Documento documento);
+
+	void deleteDoc(Documento documento);
+	
+	public Iterable<Producto> findByNombre(String nombre);
 
 }
